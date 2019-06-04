@@ -5,7 +5,7 @@ from datetime import datetime
 from furl import furl
 
 
-df_kodewilayah = pd.read_csv('kodewilayah_v2.csv', index_col='kodewilayah')
+df_kodewilayah = pd.read_csv('kodewilayah.csv', index_col='kodewilayah')
 
 
 def facebook_search(name, key, em=True):
