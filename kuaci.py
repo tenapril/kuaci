@@ -122,3 +122,24 @@ def kuaci_ktp_check(df_ktp):
     df_ktp['dob'] = df_ktp['ktp'].astype(str).str[6:12].apply(dob_checker)
 
     return df_ktp
+
+
+def kuaci_ktp_check_single(ktp_number):
+
+    if not isinstance(ktp_number, int):
+        raise Exception('Input is not an integer')
+
+    data = [ktp_number]
+    df_ktp = pd.DataFrame(data, columns=['KTP'])
+    df_ktp['ktp'] = df_ktp[df_ktp.columns[0]]
+
+    if df_ktp.columns[0] != 'ktp':
+        del df_ktp[df_ktp.columns[0]]
+
+    df_ktp['valid'] = df_ktp['ktp'].apply(validator)
+    df_ktp['kodewilayah'] = df_ktp['ktp'].astype(str).str[:6]
+    df_ktp[['location_valid', 'provinsi', 'kabupatenkota', 'kecamatan']] = df_ktp['kodewilayah'].apply(locator)
+    df_ktp['gender'] = df_ktp['ktp'].astype(str).str[6:7].apply(gender_checker)
+    df_ktp['dob'] = df_ktp['ktp'].astype(str).str[6:12].apply(dob_checker)
+
+    return df_ktp
