@@ -2,19 +2,37 @@
 
 ![](kuaci.gif)
 
-Open Source KTP Checker + KYC
+Open Source KTP Checker + KYC Indonesia
 
-This repository contain the lookup data for mapping the KTP into Location.
-This data requires a lot of time to make it.
-And the logic is in the `kuaci.py`.
+Validate Indonesian KTP (NIK) numbers and extract demographic information:
+- **Location** — province, city/district, subdistrict from area code
+- **Gender** — extracted from KTP digits
+- **Date of birth** — extracted from KTP digits
 
-If you want to try the google search engine API,
-please make one from here: https://developers.google.com/custom-search/v1/using_rest.
+Uses `kodewilayah_2025.csv` for area code mapping.
 
-You have to pass the key in the search function.
+## Usage
 
-All of this made using python 3.6.7.
-Requirements: [here](requirements.txt)
+```python
+import pandas as pd
+from kuaci import kuaci_ktp_check, kuaci_ktp_check_single
 
-This my first time trying to create an open source :)
-Please be kind.
+# Single KTP
+result = kuaci_ktp_check_single(3374081105960004)
+
+# Batch from DataFrame
+df = pd.read_csv('example.csv')
+result = kuaci_ktp_check(df)
+```
+
+## Requirements
+
+```
+pip install -r requirements.txt
+```
+
+See [requirements.txt](requirements.txt).
+
+## Deprecated
+
+Social media search functions (Google, Facebook, Instagram) have been moved to `deprecated/search.py`.
